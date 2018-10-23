@@ -193,8 +193,8 @@ void image_loader::fitToWindow() {
 }
 
 void image_loader::about() {
-    QMessageBox::about(this, tr("About Image Viewer"),
-		       tr("<p><b>Beholder</b> loager.</p>"));
+    QMessageBox::about(this, tr("About Beholder loader"),
+		       tr("<p><b>Beholder</b> loader.</p>"));
 }
 
 void image_loader::createActions() {
@@ -202,27 +202,6 @@ void image_loader::createActions() {
 
     QAction *openAct = fileMenu->addAction(tr("&Open..."), this, &image_loader::open);
     openAct->setShortcut(QKeySequence::Open);
-
-    saveAsAct = fileMenu->addAction(tr("&Save As..."), this, &image_loader::saveAs);
-    saveAsAct->setEnabled(false);
-
-    printAct = fileMenu->addAction(tr("&Print..."), this, &image_loader::print);
-    printAct->setShortcut(QKeySequence::Print);
-    printAct->setEnabled(false);
-
-    fileMenu->addSeparator();
-
-    QAction *exitAct = fileMenu->addAction(tr("E&xit"), this, &QWidget::close);
-    exitAct->setShortcut(tr("Ctrl+Q"));
-
-    QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
-
-    copyAct = editMenu->addAction(tr("&Copy"), this, &image_loader::copy);
-    copyAct->setShortcut(QKeySequence::Copy);
-    copyAct->setEnabled(false);
-
-    QAction *pasteAct = editMenu->addAction(tr("&Paste"), this, &image_loader::paste);
-    pasteAct->setShortcut(QKeySequence::Paste);
 
     QMenu *viewMenu = menuBar()->addMenu(tr("&View"));
 
@@ -248,7 +227,6 @@ void image_loader::createActions() {
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
 
     helpMenu->addAction(tr("&About"), this, &image_loader::about);
-    helpMenu->addAction(tr("About &Qt"), &QApplication::aboutQt);
 }
 
 void image_loader::updateActions() {
