@@ -3,6 +3,9 @@
 cd ~
 mkdir beholder
 
+#FFMPEG
+sudo apt-get install ffmpeg
+
 #TensorFlow(Bazel)
 sudo apt-get install openjdk-8-jdk -y
 echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
