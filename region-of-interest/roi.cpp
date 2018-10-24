@@ -4,6 +4,8 @@
 #include <QAction>
 #include <QDebug>
 #include <QFileDialog>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QMouseEvent>
 #include <QPainter>
 
@@ -51,9 +53,19 @@ void roi::mouseReleaseEvent(QMouseEvent *e) {
     selectionStarted = false;
 }
 
+void roi::set_path(std::string p) { _path = p; }
 void roi::saveSlot() {
-    QString fileName = QFileDialog::getSaveFileName(this, QObject::tr("Save File"),
-						    "/home",
-						    QObject::tr("Images (*.jpg)"));
-    this->pixmap()->copy(selectionRect).save(fileName);
+    int x1, y1, x2, y2;
+    selectionRect.getCoords(&x1, &y1, &x2, &y2);
+
+    QFile saveFile(QStringLiteral("save.json"));
+    saveFile.open(QFile::WriteOnly);
+    QJsonObject j;
+    j["path"] = _path.c_str();
+    j["x1"] = x1;
+    j["y1"] = y1;
+    j["x2"] = x2;
+    j["y2"] = y2;
+    QJsonDocument saveDoc(j);
+    saveFile.write(saveDoc.toJson());
 }

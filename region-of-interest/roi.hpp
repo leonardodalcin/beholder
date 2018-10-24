@@ -2,6 +2,7 @@
 // libraries
 #include <QLabel>
 #include <QMenu>
+#include <string>
 
 class roi : public QLabel {
     Q_OBJECT
@@ -9,6 +10,8 @@ class roi : public QLabel {
    public:
     roi(QWidget *parent = nullptr);
     ~roi();
+
+    void set_path(std::string);
 
    protected:
     void paintEvent(QPaintEvent *e);
@@ -20,6 +23,7 @@ class roi : public QLabel {
     bool selectionStarted;
     QRect selectionRect;
     QMenu contextMenu;
+    std::string _path;
    private slots:
     void saveSlot();
 };
