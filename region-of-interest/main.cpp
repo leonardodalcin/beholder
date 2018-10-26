@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
 
     QString fileName = QFileDialog::getOpenFileName(&_roi, QObject::tr("Open File"),
 						    "/home",
-						    QObject::tr("Images (*.png *.xpm *.jpg)"));
+						    QObject::tr("Images (*.pgm *.png *.xpm *.jpg)"));
     QPixmap pixmap(fileName);
 
     QFileInfo file_info(fileName);
