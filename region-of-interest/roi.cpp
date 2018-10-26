@@ -54,14 +54,18 @@ void roi::mouseReleaseEvent(QMouseEvent *e) {
 }
 
 void roi::set_path(std::string p) { _path = p; }
+void roi::set_dir(std::string d) { _dir = d; }
 void roi::saveSlot() {
     int x1, y1, x2, y2;
     selectionRect.getCoords(&x1, &y1, &x2, &y2);
 
-    QFile saveFile(QStringLiteral("save.json"));
+    std::string roi_path_str  = _dir + "/save.json";
+    QString roi_path = QString::fromUtf8(roi_path_str.c_str());
+
+    QFile saveFile(roi_path);
     saveFile.open(QFile::WriteOnly);
     QJsonObject j;
-    j["path"] = _path.c_str();
+    j["image_path"] = _path.c_str();
     j["x1"] = x1;
     j["y1"] = y1;
     j["x2"] = x2;

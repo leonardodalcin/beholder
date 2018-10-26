@@ -11,7 +11,8 @@ class roi : public QLabel {
     roi(QWidget *parent = nullptr);
     ~roi();
 
-    void set_path(std::string);
+    void set_path(std::string p);
+    void set_dir(std::string d);
 
    protected:
     void paintEvent(QPaintEvent *e);
@@ -24,6 +25,7 @@ class roi : public QLabel {
     QRect selectionRect;
     QMenu contextMenu;
     std::string _path;
+    std::string _dir;
    private slots:
     void saveSlot();
 };

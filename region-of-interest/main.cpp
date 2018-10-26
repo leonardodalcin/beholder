@@ -5,6 +5,7 @@
 #include <QCommandLineParser>
 #include <QFileDialog>
 #include <QPixmap>
+#include <iostream>
 #include <string>
 
 int main(int argc, char *argv[]) {
@@ -15,7 +16,10 @@ int main(int argc, char *argv[]) {
 						    "/home",
 						    QObject::tr("Images (*.png *.xpm *.jpg)"));
     QPixmap pixmap(fileName);
+
+    QFileInfo file_info(fileName);
     _roi.set_path(fileName.toStdString());
+    _roi.set_dir(file_info.dir().path().toStdString());
     _roi.setPixmap(fileName);
     _roi.resize(pixmap.size());
     _roi.show();
