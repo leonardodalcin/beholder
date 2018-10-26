@@ -6,6 +6,7 @@
 #include <QFileDialog>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QMouseEvent>
 #include <QPainter>
 
@@ -13,9 +14,13 @@ roi::roi(QWidget *parent)
     : QLabel(parent) {
     selectionStarted = false;
 
-    QAction *saveAction = contextMenu.addAction("Save");
+    QAction *save_action = contextMenu.addAction("Save all");
+    QAction *add_action = contextMenu.addAction("Add roi");
+    QAction *remove_action = contextMenu.addAction("Remove roi");
 
-    connect(saveAction, SIGNAL(triggered()), this, SLOT(saveSlot()));
+    connect(save_action, SIGNAL(triggered()), this, SLOT(save_slot()));
+    connect(add_action, SIGNAL(triggered()), this, SLOT(add_slot()));
+    connect(remove_action, SIGNAL(triggered()), this, SLOT(remove_slot()));
 }
 
 roi::~roi() {
@@ -55,21 +60,36 @@ void roi::mouseReleaseEvent(QMouseEvent *e) {
 
 void roi::set_path(std::string p) { _path = p; }
 void roi::set_dir(std::string d) { _dir = d; }
-void roi::saveSlot() {
-    int x1, y1, x2, y2;
-    selectionRect.getCoords(&x1, &y1, &x2, &y2);
+void roi::add_slot() {
+    selected_rois.push_back(selectionRect);
+}
 
-    std::string roi_path_str  = _dir + "/save.json";
+void roi::remove_slot() {
+    selected_rois.pop_back();
+}
+
+void roi::save_slot() {
+    std::string roi_path_str = _dir + "/save.json";
     QString roi_path = QString::fromUtf8(roi_path_str.c_str());
 
     QFile saveFile(roi_path);
     saveFile.open(QFile::WriteOnly);
     QJsonObject j;
     j["image_path"] = _path.c_str();
-    j["x1"] = x1;
-    j["y1"] = y1;
-    j["x2"] = x2;
-    j["y2"] = y2;
+    int x1, y1, x2, y2;
+    QJsonArray levelArray;
+    for (int i = 0; i < selected_rois.size(); i++) {
+	selected_rois.at(i).getCoords(&x1, &y1, &x2, &y2);
+
+	QJsonObject jr;
+	jr["x1"] = x1;
+	jr["y1"] = y1;
+	jr["x2"] = x2;
+	jr["y2"] = y2;
+	levelArray.append(jr);
+    }
+    j["coords"] = levelArray;
+
     QJsonDocument saveDoc(j);
     saveFile.write(saveDoc.toJson());
 }

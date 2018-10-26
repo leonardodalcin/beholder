@@ -3,6 +3,7 @@
 #include <QLabel>
 #include <QMenu>
 #include <string>
+#include <vector>
 
 class roi : public QLabel {
     Q_OBJECT
@@ -26,6 +27,9 @@ class roi : public QLabel {
     QMenu contextMenu;
     std::string _path;
     std::string _dir;
+    std::vector<QRect> selected_rois;
    private slots:
-    void saveSlot();
+    void save_slot();
+    void add_slot();
+    void remove_slot();
 };
