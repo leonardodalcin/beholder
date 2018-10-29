@@ -1,0 +1,4 @@
+/home/leonardo/CLionProjects/beholder/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/leonardo/CLionProjects/beholder/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/leonardo/CLionProjects/beholder/cmake-build-debug/CMakeFiles/beholder.dir
+/home/leonardo/CLionProjects/beholder/cmake-build-debug/CMakeFiles/beholder_autogen.dir
