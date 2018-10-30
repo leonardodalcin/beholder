@@ -15,7 +15,7 @@ find_package(Qt5PrintSupport REQUIRED)
 set(CMAKE_CXX_STANDARD 17)
 
 # Include project files
-add_executable(beholder main.cpp classes/roi/roi.cpp headers/roi/roi.hpp classes/image_loader/image_loader.cpp headers/image_loader/image_loader.hpp)
+add_executable(beholder main.cpp sources/roi/roi.cpp headers/roi/roi.hpp sources/image_loader/image_loader.cpp headers/image_loader/image_loader.hpp)
 
 #
 qt5_use_modules(${PROJECT_NAME} Widgets)

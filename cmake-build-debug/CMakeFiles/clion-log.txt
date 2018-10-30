@@ -1,4 +1,6 @@
-/home/leonardo/Desktop/clion-2018.2.5/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/leonardo/CLionProjects/beholder
--- Configuring done
--- Generating done
--- Build files have been written to: /home/leonardo/CLionProjects/beholder/cmake-build-debug
+/Applications/CLion.app/Contents/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/leonardodalcin/Work/beholder
+CMake Error at CMakeLists.txt:2 (cmake_minimum_required):
+  CMake 3.12 or higher is required.  You are running version 3.10.3
+
+
+-- Configuring incomplete, errors occurred!
