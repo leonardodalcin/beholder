@@ -3,6 +3,23 @@
 //libraries
 #include <boost/asio.hpp>
 
+/*
+ Estados:
+enter_state Start
+exit Start
+// Instanciar classes, preparar programa, iniciar ambiente
+
+enter_state WaitOpen
+exit Wait_Open
+enter_state ClassifyCableTieLength
+exit ClassifyCableTieLength
+enter_state WaitEjection
+exit WaitEjection
+enter_state ClassifyEjection
+exit ClassifyEjection
+enter_state WaitOpen
+exit Wait_Open
+ */
 class fsm {
    public:
     fsm(boost::asio::io_service& io);
