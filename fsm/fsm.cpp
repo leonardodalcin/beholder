@@ -67,12 +67,14 @@ void fsm::exit_start() {
 }
 
 void fsm::exit_wait_open() {
+    _camera.take_picture("cable_tie_length");
 }
 
 void fsm::exit_classify_cable_tie_length() {
 }
 
 void fsm::exit_wait_ejection() {
+    _camera.take_picture("ejection");
 }
 
 void fsm::exit_classify_ejection() {
@@ -89,19 +91,31 @@ void fsm::enter_start() {
 }
 
 void fsm::enter_wait_open() {
+    _timer(500);
     change_state(state::classify_cable_tie_length);
 }
 
 void fsm::enter_classify_cable_tie_length() {
-    change_state(state::wait_ejection);
+    if (_classifier.classify_cable_tie_length()) {
+	_io.write_pin("green_led");
+	change_state(state::wait_ejection);
+    } else {
+	_io.write_pin("red_led");
+    }
 }
 
 void fsm::enter_wait_ejection() {
+    _timer(500);
     change_state(state::classify_ejection);
 }
 
 void fsm::enter_classify_ejection() {
-    change_state(state::wait_open);
+    if (_classifier.classify_ejection()) {
+	_io.write_pin("green_led");
+	change_state(state::wait_open);
+    } else {
+	_io.write_pin("red_led");
+    }
 }
 
 void fsm::enter_end() {
