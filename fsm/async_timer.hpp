@@ -23,8 +23,16 @@ class async_timer {
     std::size_t expires_from_now(duration_type const& t);
     void cancel();
 
+    template <typename... Args>
+    void async_wait(Args&&... args);
+
    private:
     deadline_timer _timer;
 };
+
+template <typename... Args>
+void async_timer::async_wait(Args&&... args) {
+    _timer.async_wait(std::forward<Args>(args)...);
+}
 
 #endif
