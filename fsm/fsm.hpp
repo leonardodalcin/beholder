@@ -1,11 +1,17 @@
 #pragma once
-
+// local packages
+#include "camera.hpp"
+#include "classifier.hpp"
+#include "io.hpp"
 //libraries
 #include <boost/asio.hpp>
 
 class fsm {
    public:
-    fsm(boost::asio::io_service& io);
+    fsm(boost::asio::io_service& io,
+	camera& cam,
+	classifier& cla,
+	io& ipop);
 
    private:
     enum class state {
@@ -39,4 +45,7 @@ class fsm {
 
     state _state;
     async_timer _timer;
+    camera& _camera;
+    classifier& _classifier;
+    io& _io;
 };

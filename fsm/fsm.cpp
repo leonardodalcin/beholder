@@ -1,7 +1,13 @@
 #include "fms.hpp"
 
-fms::fms(boost::asio::io_service& io) : _timer(io),
-					_state(state::end) {
+fms::fms(boost::asio::io_service& io,
+	 camera& cam,
+	 classifier& cla,
+	 io& ipop) : _timer(io),
+		     _camera(cam),
+		     _classifier(cla),
+		     _io(ipop),
+		     _state(state::end) {
     change_state(state::start);
 }
 
