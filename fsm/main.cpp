@@ -7,13 +7,11 @@
 #include <boost/asio.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-// language
-#include <iostream>
-
 int main(int argc, char *argv[]) {
     boost::asio::io_service asio_io;
     camera cam();
     classifier cla();
     io ipop();
-    fsm(asio_io, cam, cla, ipop);
+
+    fsm fsm_app(asio_io, cam, cla, ipop);
 }
