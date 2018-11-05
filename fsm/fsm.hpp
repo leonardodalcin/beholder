@@ -8,7 +8,7 @@
 
 class fsm {
    public:
-    fsm(boost::asio::io_service& io,
+    fsm(boost::asio::io_service& asio_io,
 	camera& cam,
 	classifier& cla,
 	io& ipop);

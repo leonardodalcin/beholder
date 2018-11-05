@@ -1,9 +1,9 @@
 #include "fms.hpp"
 
-fms::fms(boost::asio::io_service& io,
+fms::fms(boost::asio::io_service& asio_io,
 	 camera& cam,
 	 classifier& cla,
-	 io& ipop) : _timer(io),
+	 io& ipop) : _timer(asio_io),
 		     _camera(cam),
 		     _classifier(cla),
 		     _io(ipop),
