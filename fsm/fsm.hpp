@@ -39,7 +39,7 @@ class fsm {
     void enter_classify_ejection();
     void enter_end();
 
-    void start_timer();
+    void set_timer();
     void handle_timer(const boost::system::error_code& e);
     void stop_timer();
 

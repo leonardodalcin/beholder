@@ -1,4 +1,4 @@
-#include "fms.hpp"
+#include "fsm.hpp"
 
 fms::fms(boost::asio::io_service& asio_io,
 	 camera& cam,
@@ -12,7 +12,9 @@ fms::fms(boost::asio::io_service& asio_io,
 }
 
 void fsm::change_state(state new_state) {
-    std::cout << "Changing state from \"" << _state << "\" to \"" << new_state << '\"';
+    std::cout << "Changing state from \""
+	      << _state << "\" to \""
+	      << new_state << '\"';
 
     // On State Exit
     switch (_state) {
@@ -120,4 +122,51 @@ void fsm::enter_classify_ejection() {
 
 void fsm::enter_end() {
     // finalizar pendencias
+}
+
+void manager::set_timer() {
+    std::cout << "Start fsm timer; state=\"" << _state << '\"';
+    int tseconds;
+    switch (_state) {
+	case state::wait_open:
+	    tseconds = 1;
+	    break;
+	case state::wait_ejection:
+	    tseconds = 1;
+	    break;
+	default:
+	    return;
+    }
+
+    _timer.expires_from_now(boost::posix_time::seconds(tseconds));
+    _timer.async_wait([this](const boost::system::error_code& error) { handle_timer(error); });
+}
+
+void manager::handle_timer(const boost::system::error_code& error) {
+    if (error == boost::system::errc::operation_canceled) {
+	std::cout << "Connection timer was canceled\n";
+	return;
+    }
+
+    // throw if is a error different from operation_canceled
+    boost::asio::detail::throw_error(error, "return timer handle");
+
+    std::cout << "Handle fsm; state=\"" << _state << '\"';
+    switch (_state) {
+	case state::idle:
+	    change_state(state::sleep);
+	    break;
+	case state::intro:
+	case state::active:
+	    change_state(state::idle);
+	    break;
+	default:
+	    ERROR(<< "fsm handle timer error: Invalid state " << _state);
+	    break;
+    }
+}
+
+void manager::stop_timer() {
+    std::cout << "Stop fsm timer; state=\"" << _state << '\"';
+    _timer.cancel();
 }
