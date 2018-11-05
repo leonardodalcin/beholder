@@ -1,4 +1,6 @@
 #include "fsm.hpp"
+// language
+#include <iostream>
 
 fms::fms(boost::asio::io_service& asio_io,
 	 camera& cam,
@@ -66,6 +68,7 @@ void fsm::change_state(state new_state) {
 
 // exit
 void fsm::exit_start() {
+    //
 }
 
 void fsm::exit_wait_open() {
@@ -73,6 +76,7 @@ void fsm::exit_wait_open() {
 }
 
 void fsm::exit_classify_cable_tie_length() {
+    //
 }
 
 void fsm::exit_wait_ejection() {
@@ -80,6 +84,7 @@ void fsm::exit_wait_ejection() {
 }
 
 void fsm::exit_classify_ejection() {
+    //
 }
 
 void fsm::exit_end() {
@@ -125,7 +130,8 @@ void fsm::enter_end() {
 }
 
 void manager::set_timer() {
-    std::cout << "Start fsm timer; state=\"" << _state << '\"';
+    std::cout << "Start fsm timer; state=\""
+	      << _state << '\"';
     int tseconds;
     switch (_state) {
 	case state::wait_open:
@@ -151,22 +157,24 @@ void manager::handle_timer(const boost::system::error_code& error) {
     // throw if is a error different from operation_canceled
     boost::asio::detail::throw_error(error, "return timer handle");
 
-    std::cout << "Handle fsm; state=\"" << _state << '\"';
+    std::cout << "Handle fsm; state=\""
+	      << _state << '\"';
     switch (_state) {
-	case state::idle:
-	    change_state(state::sleep);
+	case state::wait_open:
+	    //change_state(state::/**/);
 	    break;
-	case state::intro:
-	case state::active:
-	    change_state(state::idle);
+	case state::wait_ejection:
+	    //change_state(state::/**/);
 	    break;
 	default:
-	    ERROR(<< "fsm handle timer error: Invalid state " << _state);
+	    std::cout << "fsm handle timer error: Invalid state "
+		      << _state;
 	    break;
     }
 }
 
 void manager::stop_timer() {
-    std::cout << "Stop fsm timer; state=\"" << _state << '\"';
+    std::cout << "Stop fsm timer; state=\""
+	      << _state << '\"';
     _timer.cancel();
 }
