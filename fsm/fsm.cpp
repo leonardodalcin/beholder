@@ -135,16 +135,16 @@ void manager::set_timer() {
     int tseconds;
     switch (_state) {
 	case state::wait_open:
-	    tseconds = 1;
+	    tseconds = 500;
 	    break;
 	case state::wait_ejection:
-	    tseconds = 1;
+	    tseconds = 500;
 	    break;
 	default:
 	    return;
     }
 
-    _timer.expires_from_now(boost::posix_time::seconds(tseconds));
+    _timer.expires_from_now(boost::posix_time::milliseconds(tseconds));
     _timer.async_wait([this](const boost::system::error_code& error) { handle_timer(error); });
 }
 
